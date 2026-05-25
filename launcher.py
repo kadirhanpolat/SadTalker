@@ -193,11 +193,18 @@ def prepare_environment():
 
 
 def start():
+    import os as _os
     print(f"Launching SadTalker Web UI")
     from app_sadtalker import sadtalker_demo
     demo = sadtalker_demo()
     demo.queue()
-    demo.launch()
+    # allowed_paths: results klasörü Gradio'nun güvenlik kontrolünü geçer
+    _results_dir = _os.path.abspath("results")
+    _os.makedirs(_results_dir, exist_ok=True)
+    demo.launch(
+        show_error=True,
+        allowed_paths=[_results_dir],
+    )
 
 if __name__ == "__main__":
     prepare_environment()
